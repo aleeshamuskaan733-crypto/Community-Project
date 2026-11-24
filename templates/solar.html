@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}Solar Savings{% endblock %}{% block body %}
+<h1>Rooftop solar savings estimator</h1>
+<form class="f card" method="post">
+<div><label>Monthly units used (kWh)</label><input name="units" type="number" step="any" value="{{ f.units }}"></div>
+<div><label>Sanctioned load (kW)</label><input name="load" type="number" step="any" value="{{ f.load }}"></div>
+<div><label>Gruha Jyothi units</label><input name="gj" type="number" step="any" value="{{ f.gj }}"></div>
+<div><label>Solar system size (kWp)</label><input name="kw" type="number" step="0.5" value="{{ f.kw }}"></div>
+<button>Estimate</button></form>
+<div class="grid sec">
+<div class="card"><div class="big">{{ s.annual_gen }} kWh</div><div class="mut">generated per year</div></div>
+<div class="card"><div class="big">₹{{ '{:,}'.format(s.saving) }}</div><div class="mut">bill saving per year</div></div>
+<div class="card"><div class="big">{{ s.payback or '—' }} yrs</div><div class="mut">payback (net cost ₹{{ '{:,}'.format(s.net_cost) }})</div></div>
+<div class="card"><div class="big">{{ s.co2_kg }} kg</div><div class="mut">CO₂ avoided / yr (≈ {{ s.trees }} trees)</div></div></div>
+<div class="card"><h2>Monthly generation (kWh)</h2>
+<div class="bars">{% for r in s.rows %}<div><i style="height:{{ (r.gen / s.max_gen * 120)|int if s.max_gen else 0 }}px"></i>{{ r.month }}<br>{{ r.gen }}</div>{% endfor %}</div></div>
+<div class="card sec scroll"><h2>Month by month bill</h2><table><tr><th>Month</th><th class="n">Solar kWh</th><th class="n">Bill now ₹</th><th class="n">Bill with solar ₹</th><th class="n">Saving ₹</th></tr>
+{% for r in s.rows %}<tr><td>{{ r.month }}</td><td class="n">{{ r.gen }}</td><td class="n">{{ r.old }}</td><td class="n">{{ r.new }}</td><td class="n">{{ r.saving }}</td></tr>{% endfor %}</table></div>
+<div class="card"><p>Gross cost ₹{{ '{:,}'.format(s.gross_cost) }} − PM Surya Ghar subsidy ₹{{ '{:,}'.format(s.subsidy) }} = <b>₹{{ '{:,}'.format(s.net_cost) }}</b>. Roof area needed ≈ {{ s.area }} sq ft. Estimated 25-year net benefit ₹{{ '{:,}'.format(s.life_saving) }}.</p>
+<p class="mut">Assumes {{ assume.kwh_per_kwp_day }} kWh/kWp/day, ₹{{ assume.cost_per_kw }}/kW, export credit ₹{{ assume.export_rate }}/unit. A low-consumption Gruha Jyothi home saves little in rupees; solar mainly benefits larger consumers and lowers carbon.</p></div>
+{% endblock %}

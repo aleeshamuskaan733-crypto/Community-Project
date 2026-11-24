@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% block title %}Savings Calculator{% endblock %}{% block body %}
+<h1>Rooftop solar savings calculator</h1>
+<p>Pre-filled from the sample MESCOM bill ({{ sample.units }} units, {{ sample.load_kw }} kW, Gruha Jyothi entitlement {{ sample.entitlement }} units). Change any value; results update instantly.</p>
+<form id="calc" class="card f">
+<div><label>Monthly consumption (units)</label><input name="units" type="number" step="1" min="0" value="{{ sample.units }}"></div>
+<div><label>Sanctioned load (kW)</label><input name="load_kw" type="number" step="0.5" min="0.5" value="{{ sample.load_kw }}"></div>
+<div><label>Solar system size (kW)</label><input name="solar_kw" type="number" step="0.5" min="0" value="1"></div>
+<div><label>District</label><select name="district">{% for d in districts %}<option>{{ d }}</option>{% endfor %}</select></div>
+<div><label>Gruha Jyothi entitlement (units)</label><input name="entitlement" type="number" min="0" max="200" value="{{ sample.entitlement }}"></div>
+<div><label>Installed cost (₹ per kW)</label><input name="cost_per_kw" type="number" value="55000"></div>
+<div class="chk"><input id="gj" name="gruha_jyothi" type="checkbox" value="1" checked><label for="gj" style="margin:0">On Gruha Jyothi</label></div>
+<div class="chk"><input id="sb" name="subsidy" type="checkbox" value="1" checked><label for="sb" style="margin:0">Include PM Surya Ghar subsidy</label></div>
+<details style="grid-column:1/-1"><summary>Tariff rates (from the bill)</summary><div class="f" style="margin-top:10px">
+<div><label>Fixed ₹/kW</label><input name="fixed_per_kw" type="number" step="0.01" value="{{ tariff.fixed_per_kw }}"></div>
+<div><label>Energy ₹/unit</label><input name="energy_rate" type="number" step="0.01" value="{{ tariff.energy_rate }}"></div>
+<div><label>FPPCA ₹/unit</label><input name="fppca" type="number" step="0.01" value="{{ tariff.fppca }}"></div>
+<div><label>P&amp;G ₹/unit</label><input name="pg_surcharge" type="number" step="0.01" value="{{ tariff.pg_surcharge }}"></div>
+<div><label>Tax %</label><input name="tax_pct" type="number" step="0.1" value="{{ tariff.tax_pct }}"></div></div></details>
+</form>
+<h2>Your current bill</h2><div class="card" id="billbox"></div>
+<h2>Estimated results</h2><div id="out"></div>
+<h2>Monthly bill: now vs with solar</h2><div class="card"><div id="chart"></div>
+<div class="tablewrap"><table><thead><tr><th>Month</th><th>Solar kWh</th><th>Net units</th><th>Bill now</th><th>Bill with solar</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+<p class="note">Model: net metering with surplus units carried forward within the year; yields are regional averages; the bill structure follows the sample MESCOM bill. Real savings depend on your tariff slab, shading and roof orientation.</p>{% endblock %}

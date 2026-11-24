@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block body %}
+<div class="hero"><h1>Community Renewable Energy Awareness &amp; Management</h1>
+<p>Learn about the clean-energy options available in the MESCOM supply area (Dakshina Kannada, Udupi, Shivamogga, Chikkamagaluru), estimate your bill, and see how much a rooftop solar system could save your household and community.</p>
+<a class="btn" href="{{ url_for('solar') }}">Estimate my solar savings</a></div>
+<h2>Example household (from a MESCOM bill: 2 kW load, 87 units, Gruha Jyothi)</h2>
+<div class="grid">
+<div class="card"><div class="big">{{ s.annual_gen }} kWh</div><div class="mut">yearly output of a 2 kW rooftop system</div></div>
+<div class="card"><div class="big">₹{{ '{:,}'.format(s.saving) }}</div><div class="mut">estimated yearly bill saving</div></div>
+<div class="card"><div class="big">{{ s.co2_kg }} kg</div><div class="mut">CO₂ avoided every year (≈ {{ s.trees }} trees)</div></div>
+<div class="card"><div class="big">{{ s.payback or '—' }} yrs</div><div class="mut">payback after PM Surya Ghar subsidy</div></div></div>
+<div class="sec grid">
+<div class="card"><h2>📚 Resources</h2>Solar, wind, biogas and more, and what suits the coast and Malnad.</div>
+<div class="card"><h2>🧾 Bill Estimator</h2>Rebuild your MESCOM bill: fixed, energy, FPPCA, surcharge, tax and Gruha Jyothi.</div>
+<div class="card"><h2>🏘 Community</h2>Add your household and watch the community's solar capacity grow.</div></div>
+{% endblock %}

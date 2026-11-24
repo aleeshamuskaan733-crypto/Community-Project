@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Awareness{% endblock %}{% block body %}
+<h1>Energy awareness</h1><h2>Tips for households &amp; communities</h2>
+<div class="grid">{% for t,d in tips %}<div class="card"><h3>{{ t }}</h3><p>{{ d }}</p></div>{% endfor %}</div>
+<h2>How to read your MESCOM bill</h2><div class="card"><table>{% for n,d in fields %}<tr><td style="vertical-align:top;white-space:nowrap"><b>{{ n }}</b></td><td style="text-align:left">{{ d }}</td></tr>{% endfor %}</table></div>{% endblock %}

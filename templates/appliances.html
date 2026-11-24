@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Efficiency{% endblock %}{% block body %}
+<h1>Energy-efficiency savings</h1><p class="mut">Cutting demand is the cheapest renewable energy. Adjust hours and quantity.</p>
+<form method="get" class="card scroll"><table><tr><th>Upgrade</th><th>Qty</th><th>Hours/day</th><th class="n">kWh/mo saved</th><th class="n">₹/mo saved</th></tr>
+{% for r in rows %}<tr><td>{{ r.name }}</td><td><input name="q_{{ r.key }}" type="number" value="{{ r.qty|int }}" style="width:70px"></td>
+<td><input name="h_{{ r.key }}" type="number" step="any" value="{{ r.hours }}" style="width:80px"></td><td class="n">{{ r.kwh }}</td><td class="n">{{ r.rs }}</td></tr>{% endfor %}
+<tr class="tot"><td colspan="4">Total monthly saving</td><td class="n">₹{{ total }}</td></tr></table><p><button>Recalculate</button></p></form>
+{% endblock %}

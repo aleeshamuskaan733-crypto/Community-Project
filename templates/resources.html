@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}Resources{% endblock %}{% block body %}
+<h1>Renewable energy resources for the MESCOM area</h1>
+<p class="mut">Electricity in this area comes from MESCOM (Mangalore Electricity Supply Company). These options reduce what you draw from the grid.</p>
+<div class="grid">
+<div class="card"><h2>☀ Rooftop solar</h2><span class="tag">Best fit</span><p>About 4–5 peak sun hours a day on the coast; output dips in the June–August monsoon. Grid-connected systems with net metering export surplus to MESCOM. Central PM Surya Ghar subsidy: ₹30,000/kW for the first 2 kW and ₹18,000 for the third kW (cap ₹78,000).</p></div>
+<div class="card"><h2>🚿 Solar water heater</h2><p>Replaces a 2 kW geyser. Hot water from the sun cuts roughly 60 units a month in a family home.</p></div>
+<div class="card"><h2>💨 Small wind</h2><p>Limited to windy coastal and ridge sites. Usually hybrid with solar; needs a site wind survey first.</p></div>
+<div class="card"><h2>🌿 Biogas</h2><p>Kitchen and farm waste in Udupi and Malnad villages gives cooking gas and slurry manure, reducing LPG and power use.</p></div>
+<div class="card"><h2>💧 Micro-hydro</h2><p>Streams in the Western Ghats foothills of Shivamogga and Chikkamagaluru suit small community schemes.</p></div>
+<div class="card"><h2>🏘 Community solar</h2><p>Apartments and RWAs can share a rooftop or ground-mount plant through virtual net metering where permitted.</p></div></div>
+<div class="card sec"><h2>Gruha Jyothi &amp; your bill</h2><p>Under Gruha Jyothi, eligible households get units free up to their entitlement (average usage + 10%, max 200 units). Solar still helps: it lowers units above the free limit and earns export credit.</p>
+<p>Start with the <a href="{{ url_for('bill') }}">bill estimator</a>, then try <a href="{{ url_for('solar') }}">solar savings</a>.</p></div>
+{% endblock %}

@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Community Renewable Energy Portal{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
+<header><div class="w"><b>☀ Community Renewable Energy Portal · MESCOM</b>
+<nav>{% for ep,l in [('home','Home'),('resources','Resources'),('bill','Bill Estimator'),('solar','Solar Savings'),('appliances','Efficiency'),('community','Community')] %}
+<a href="{{ url_for(ep) }}" class="{{ 'on' if request.endpoint==ep }}">{{ l }}</a>{% endfor %}</nav></div></header>
+<main class="w">{% with m=get_flashed_messages(with_categories=true) %}{% for c,t in m %}<p class="{{c}}">{{t}}</p>{% endfor %}{% endwith %}
+{% block body %}{% endblock %}
+<footer>Estimates use MESCOM LT tariff values from a sample bill and typical coastal-Karnataka solar yield. Actual bills and savings depend on current KERC/MESCOM tariff orders, roof orientation and shading. Confirm with your MESCOM sub-division.</footer></main></body></html>

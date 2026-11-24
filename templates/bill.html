@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block title %}Bill Estimator{% endblock %}{% block body %}
+<h1>MESCOM bill estimator</h1>
+<form class="f card" method="post">
+<div><label>Units consumed (kWh)</label><input name="units" type="number" step="any" value="{{ f.units }}"></div>
+<div><label>Sanctioned load (kW)</label><input name="kw" type="number" step="any" value="{{ f.kw }}"></div>
+<div><label>Gruha Jyothi subsidy units</label><input name="gj" type="number" step="any" value="{{ f.gj }}"></div>
+<div><label>Arrears / other (₹)</label><input name="arrears" type="number" step="any" value="{{ f.arrears }}"></div>
+<button>Calculate</button></form>
+<div class="grid sec">
+<div class="card scroll"><h2>Bill for consumed units</h2><table>
+<tr><td>Fixed charges ({{ b.kw }} kW × ₹{{ t.fixed_per_kw }})</td><td class="n">{{ '%.2f'|format(b.gross.fixed) }}</td></tr>
+<tr><td>Energy ({{ b.units|round(1) }} × ₹{{ t.energy_rate }})</td><td class="n">{{ '%.2f'|format(b.gross.energy) }}</td></tr>
+<tr><td>FPPCA (₹{{ t.fppca }}/unit)</td><td class="n">{{ '%.2f'|format(b.gross.fppca) }}</td></tr>
+<tr><td>P and G surcharge (₹{{ t.pg_surcharge }}/unit)</td><td class="n">{{ '%.2f'|format(b.gross.pg) }}</td></tr>
+<tr><td>Tax ({{ t.tax_pct|int }}%)</td><td class="n">{{ '%.2f'|format(b.gross.tax) }}</td></tr>
+<tr class="tot"><td>Sub-total</td><td class="n">{{ '%.2f'|format(b.gross.total) }}</td></tr>
+<tr><td>Gruha Jyothi subsidy ({{ b.gj_units|round(1) }} units)</td><td class="n">− {{ '%.2f'|format(b.subsidy) }}</td></tr>
+<tr><td>Arrears / other</td><td class="n">{{ '%.2f'|format(b.arrears) }}</td></tr>
+<tr class="tot"><td>Net payable</td><td class="n">₹ {{ '%.2f'|format(b.net) }}</td></tr></table></div>
+<div class="card"><div class="big">₹{{ b.per_unit }}</div><div class="mut">effective cost per unit before subsidy</div>
+<p>Chargeable units: <b>{{ b.chargeable|round(1) }}</b></p>
+<p class="mut">Rates are read from your sample bill and may differ slightly from the printed amount. Update them in <code>calc.py</code>.</p></div></div>
+{% endblock %}

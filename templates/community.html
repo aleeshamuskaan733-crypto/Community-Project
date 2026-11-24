@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}Community{% endblock %}{% block body %}
+<h1>Community tracker</h1>
+<div class="grid"><div class="card"><div class="big">{{ stats.n }}</div><div class="mut">households</div></div>
+<div class="card"><div class="big">{{ stats.kw|round(1) }} kW</div><div class="mut">solar capacity</div></div>
+<div class="card"><div class="big">{{ '{:,}'.format(stats.gen) }} kWh</div><div class="mut">est. yearly generation</div></div>
+<div class="card"><div class="big">{{ stats.co2 }} t</div><div class="mut">CO₂ avoided / yr · ₹{{ '{:,}'.format(stats.save) }} saved</div></div></div>
+<div class="card sec"><h2>Solar kW by district</h2><table>{% for d,v in by_d.items() %}<tr><td>{{ d }}</td><td class="n">{{ v|round(1) }} kW</td></tr>{% endfor %}</table></div>
+<form class="f card sec" method="post"><div><label>Name</label><input name="name" required></div><div><label>Locality</label><input name="locality"></div>
+<div><label>District</label><select name="district">{% for d in districts %}<option>{{ d }}</option>{% endfor %}</select></div>
+<div><label>Monthly units</label><input name="units" type="number" step="any"></div><div><label>Solar installed (kW)</label><input name="kw" type="number" step="any" value="0"></div><button>Add household</button></form>
+<div class="card scroll"><h2>Recent entries</h2><table><tr><th>Name</th><th>Locality</th><th>District</th><th class="n">Units</th><th class="n">kW</th></tr>
+{% for r in rows %}<tr><td>{{ r.name }}</td><td>{{ r.locality }}</td><td>{{ r.district }}</td><td class="n">{{ r.monthly_units }}</td><td class="n">{{ r.solar_kw }}</td></tr>{% else %}<tr><td colspan="5" class="mut">No households yet.</td></tr>{% endfor %}</table></div>
+{% endblock %}
